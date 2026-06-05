@@ -1,0 +1,17 @@
+import subprocess
+import time
+
+print("啟動 AI Receiver...")
+receiver = subprocess.Popen(
+    ["python", "ai_receiver.py"],
+    creationflags=subprocess.CREATE_NEW_CONSOLE
+)
+time.sleep(2)
+
+print("啟動 IoT Sender...")
+sender = subprocess.Popen(
+    ["python", "iot_sender.py"],
+    creationflags=subprocess.CREATE_NEW_CONSOLE
+)
+
+print("✔ Receiver + Sender 已全部啟動")
