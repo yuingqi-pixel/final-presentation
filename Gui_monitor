@@ -1,0 +1,71 @@
+import tkinter as tk
+from tkinter import ttk
+import random
+import time
+
+# 建立主視窗
+root = tk.Tk()
+
+root.title("AI 金融詐騙監控系統")
+root.geometry("700x400")      #產生視窗
+
+# 標題
+title = tk.Label(
+    root,
+    text="AI 即時詐騙監控系統",
+    font=("Arial", 20)
+)
+
+title.pack(pady=10)
+
+# 建立表格
+columns = ("時間", "交易金額", "風險", "地點")
+
+tree = ttk.Treeview(
+    root,
+    columns=columns,
+    show="headings"
+)
+
+# 欄位名稱
+for col in columns:
+    tree.heading(col, text=col)
+    tree.column(col, width=200)
+
+tree.pack(fill="both", expand=True)
+
+# 新增資料函式
+def add_data():
+
+    current_time = time.strftime("%H:%M:%S")
+
+    amount = random.randint(100, 50000)
+
+    risk_num = random.random()
+
+    locations = ["台北", "新北", "台中", "高雄", "海外-美國", "海外-日本", "海外-中國"]
+    location = random.choice(locations)
+
+    # 判斷風險
+    if risk_num > 0.7:
+        risk = "🔺 高風險"
+    elif risk_num > 0.3:
+        risk = "🟡 中風險"
+    else:
+        risk = "🟢 低風險"
+
+    # 插入資料
+    tree.insert(
+        "",
+        0,
+        values=(current_time, amount, risk, location)
+    )
+
+    # 每2秒更新一次
+    root.after(2000, add_data)
+
+# 開始更新
+add_data()
+
+# 啟動 GUI
+root.mainloop()
